@@ -2,13 +2,17 @@ require 'ruby-processing'
 
 class MySketch < Processing::App
   load_ruby_library "control_panel"
-  
+    
   attr_accessor :scaler, :direction, :floaters
   
   def setup
     control_panel do |c|
       c.slider    :alpha,  0.0..1.0
     end
+    
+    # hint(ENABLE_NATIVE_FONTS)
+    # f = create_font("Monospaced", 66)
+    # text_font f, 40.0
     
     color_mode RGB, 1.0
     frame_rate 30
@@ -31,15 +35,37 @@ class MySketch < Processing::App
   
   def draw
     draw_background
+    
     if floaters.size < 20
       @floaters << floater = Floater.new
     end
-     
-    @floaters.each do |f|      
-      f.show
-    end
     
-    fill rand(0xFFFF00FF)
+    (0...(floaters.length)).each do |ia|
+      fa = floaters[ia]
+      fa.reversing = fa.reversing - 1 if fa.reversing > 0
+      
+      ((ia+1)...(floaters.length)).each do |ib|
+        fb = floaters[ib]
+        
+        if fa.quadrant == fb.quadrant
+          if (fa.x_offset > fb.x_offset) and (fa.x_offset < (fb.x_offset + 50))
+            fb.reverse_x if fb.reversing == 0
+            fa.reverse_x if fa.reversing == 0
+            
+            fa.reversing = 100
+          end
+
+          if (fa.y_offset > fb.y_offset) and (fa.y_offset < (fb.y_offset + 50))
+            fb.reverse_y if fb.reversing == 0
+            fa.reverse_y if fa.reversing == 0
+
+            fa.reversing = 100
+          end
+        end
+      end
+      fa.show
+    end
+        
     strokeWeight 3
   end
   
@@ -47,22 +73,25 @@ end
 
 class Floater
   attr_accessor :width, :height, :x_offset, :y_offset,
-    :x_direction, :y_direction
+    :x_direction, :y_direction, :fill_color, :reversing
   
   def initialize
     @width = 50
     @height = 50
-    @x_offset = 50
-    @y_offset = 50
+    @x_offset = rand 500
+    @y_offset = rand 500
     @x_direction = 'forward'
     @y_direction = 'forward'
+    @fill_color = rand(0xFFFF00FF)
+    @reversing = 0
   end
     
   def show
+    P.fill fill_color
+    
     move 'x', (x_offset > (P.width - 50))
     move 'y', (y_offset > (P.height - 50))
     
-    text quadrant, x_offset, y_offset
     params
   end
   
@@ -74,11 +103,11 @@ class Floater
     if self.send("#{axis}_offset") < 0
       self.send "#{axis}_direction=", 'forward'
     end
-    ,
+    
     if self.send("#{axis}_direction") == 'forward'
-      self.send "#{axis}_offset=", (self.send("#{axis}_offset")+rand(20))
+      self.send "#{axis}_offset=", (self.send("#{axis}_offset")+2)
     else
-      self.send "#{axis}_offset=", (self.send("#{axis}_offset")-rand(20))
+      self.send "#{axis}_offset=", (self.send("#{axis}_offset")-2)
     end
   end
   
@@ -106,6 +135,18 @@ class Floater
     
     return "#{x_quadrant}-#{y_quadrant}"
   end
+  
+  def reverse_x
+    @x_direction = (x_direction == 'forward') ? 'reverse' : 'forward'
+  end
+  
+  def reverse_y
+    @y_direction = (y_direction == 'forward') ? 'reverse' : 'forward'
+  end
+  
+  def reversing
+    0
+  end
 end
 
-P = MySketch.new :title => "My Sketch", :width => 800, :height => 900
+P = MySketch.new :title => "My Sketch", :width => 800, :height => 760
