@@ -26,6 +26,8 @@ class MySketch < Processing::App
     else
       @scaler -= 5
     end
+    fill rand(0xFFFF00FF)
+    strokeWeight rand(10)
     quad(scaler, 5, rand(width), rand(50)+50, rand(width), rand(600)+50, rand(width), rand(50)+50)
   end
 end
