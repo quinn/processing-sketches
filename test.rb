@@ -28,7 +28,7 @@ class MySketch < Processing::App
     end
     fill rand(0xFFFF00FF)
     strokeWeight rand(10)
-    quad(scaler, 5, rand(width), rand(50)+50, rand(width), rand(600)+50, rand(width), rand(50)+50)
+    quad(scaler, 5, rand(width), rand(50)+50, mouseX, rand(600)+50, rand(width), rand(50)+50)
   end
 end
 
