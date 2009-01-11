@@ -51,8 +51,6 @@ class MySketch < Processing::App
     quad(mouseX, mouseY, rand(width), rand(50)+50, 5, 5, rand(width), rand(50)+50)
     draw_background
   end
-  
-  
 end
 
 MySketch.new :title => "My Sketch", :width => 800, :height => 900
