@@ -12,8 +12,8 @@ class MySketch < Processing::App
   end
   
   def draw    
-    fill 200,200, 200, 50
-    rect 0,0, P.width, P.height
+    fill 100+rand(40),100+rand(40), 100+rand(80), 10
+    rect -1, -1, P.width+1, P.height+1
     
     pos = Position.new last_pos
     
@@ -53,17 +53,21 @@ class Position
   def initialize last_pos = nil
     if last_pos
       if rand(2) == 1
-        self.x = rand(P.width)
+        self.x = last_pos.x + rand(100)*(rand(3)-1)
+        self.x = P.width if x > P.width
+        self.x = 0 if x < 0
         self.y = last_pos.y
       else
         self.x = last_pos.x
-        self.y = rand(P.height)
+        self.y = last_pos.y + rand(100)*(rand(3)-1)
+        self.y = P.height if y > P.height
+        self.y = 0 if y < 0
       end
     else
-      self.x = rand(P.width)
-      self.y = rand(P.height)
+      self.x = P.width / 2
+      self.y = P.height / 2
     end
   end
 end
 
-P = MySketch.new :title => "My Sketch", :width => 800, :height => 760
+P = MySketch.new :title => "My Sketch", :width => 500, :height => 500
