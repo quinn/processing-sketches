@@ -7,7 +7,7 @@ class Elbows < Processing::App
   def setup
     @dot = Dot.new
     @joints = 1
-    frame_rate 0.1
+    frame_rate 20
     smooth
     draw
   end
@@ -28,13 +28,14 @@ class Elbows < Processing::App
     noFill
     beginShape
     starting.to_vertex
-      
-      @total_points = 4
+      @total_points = rand(30)+1
       @current_point = 1
-      puts "<<<<<<<<< start"
-      puts starting.x
-      draw_points 0,0
-      puts ending.x
+      if (rand 2) == 0
+        d = :vert
+      else
+        d = :horiz
+      end
+      draw_points 0,0, d
     ending.to_vertex
     endShape
     
@@ -42,21 +43,28 @@ class Elbows < Processing::App
   end
   
   # have to distinguish if we're going left/right or up/down
-  def draw_points x_offset, y_offset
-    remaining_x_distance = x_diff - x_offset
-    x_offset += remaining_x_distance/5
-
-    remaining_y_distance = y_diff - y_offset
-    y_offset += remaining_y_distance/2
-
+  def draw_points x_offset, y_offset, orientation
+    if orientation == :vert
+      orientation = :horiz
+      remaining_x_distance = x_diff - x_offset
+      x_offset += relative_rand(remaining_x_distance)
+      if current_point == total_points
+        return vertex ending.x, starting.y + y_offset
+      end
+    else
+      orientation = :vert
+      remaining_y_distance = y_diff - y_offset
+      y_offset += relative_rand(remaining_y_distance)
+      if current_point == total_points
+        return vertex starting.x + x_offset, ending.y
+      end
+    end
     vertex starting.x + x_offset, starting.y + y_offset
-    
-    #dot.show :size => :random
     
     return if current_point == total_points
     
-    @current_point += 1  
-    draw_points x_offset, y_offset
+    @current_point += 1
+    draw_points x_offset, y_offset, orientation
   end
   
   def x_diff
@@ -72,6 +80,12 @@ class Elbows < Processing::App
     dot.show
     dot.shift ending
     dot.show :fill_color => [100] # end point is grey
+  end
+  
+  def relative_rand num
+    r = rand num
+    return r if num.abs == num
+    r * -1  
   end
 end
 
