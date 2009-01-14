@@ -6,9 +6,15 @@ class Dot
     self.y_offset = 100
   end
   
-  def shift pos
-    self.x_offset = pos.x
-    self.y_offset = pos.y
+  def shift *args
+    if args.length > 1
+      self.x_offset = args[0]
+      self.y_offset = args[1]
+    else
+      pos = args[0]
+      self.x_offset = pos.x
+      self.y_offset = pos.y
+    end
   end
   
   def show opts = {}

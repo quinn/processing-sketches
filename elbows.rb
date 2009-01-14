@@ -19,7 +19,7 @@ class Elbows < Processing::App
   
   def make_positions
     @starting = Position.new
-    @ending = Position.new    
+    @ending = Position.new 
   end
   
   def draw
@@ -29,11 +29,12 @@ class Elbows < Processing::App
     beginShape
     starting.to_vertex
       
-      x_offset = starting.x
-      @total_points = 2
+      @total_points = 4
       @current_point = 1
-      
-      draw_points 20
+      puts "<<<<<<<<< start"
+      puts starting.x
+      draw_points 0,0
+      puts ending.x
     ending.to_vertex
     endShape
     
@@ -41,27 +42,29 @@ class Elbows < Processing::App
   end
   
   # have to distinguish if we're going left/right or up/down
-  def draw_points offset
-    remainder = y_diff + offset
+  def draw_points x_offset, y_offset
+    remaining_x_distance = x_diff - x_offset
+    x_offset += remaining_x_distance/5
+
+    remaining_y_distance = y_diff - y_offset
+    y_offset += remaining_y_distance/2
+
+    vertex starting.x + x_offset, starting.y + y_offset
     
-    if current_point == total_points # last point
-      return vertex ending.x, ending.y+remainder
-    elsif current_point == 1 # 1st point
-      vertex starting.x, starting.y+offset
-    else # middle points
-      vertex starting.x-x_diff/2, starting.y+offset
-    end
+    #dot.show :size => :random
+    
+    return if current_point == total_points
     
     @current_point += 1  
-    draw_points offset
+    draw_points x_offset, y_offset
   end
   
   def x_diff
-    (starting.x - ending.x)
+    (ending.x - starting.x)
   end
 
   def y_diff
-    (starting.y - ending.y)
+    (ending.y - starting.y)
   end
   
   def draw_dots
