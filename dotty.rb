@@ -1,17 +1,14 @@
 require 'ruby-processing'
 require 'lib/position'
 require 'lib/dot'
+require 'lib/mixins/capture'
 
 class MySketch < Processing::App
   attr_accessor :dot, :last_pos
-  load_ruby_library "control_panel" 
-  
   include Capture
-  
+
   def setup
-    control_panel do |c|
-      c.button :saveFrame
-    end
+    capture_button
     
     self.dot = Dot.new
     pos = Position.new
