@@ -1,7 +1,8 @@
 class Position
-  attr_accessor :x, :y
+  attr_accessor :x, :y, :follow
   
-  def initialize last_pos = nil
+  def initialize last_pos = nil, opts = {}
+    @follow = opts.delete :follow
     if last_pos
       if rand(2) == 1
         self.x = last_pos.x + rand(100)*(rand(3)-1)
@@ -22,5 +23,15 @@ class Position
   
   def to_vertex
     P.vertex x, y
+  end
+  
+  def x
+    return @x unless follow
+    @x = P.mouseX
+  end
+  
+  def y
+    return @y unless follow
+    @y = P.mouseY
   end
 end

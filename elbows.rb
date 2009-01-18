@@ -3,13 +3,18 @@ require 'lib/position'
 require 'lib/dot'
 
 class Elbows < Processing::App
-  attr_accessor :dot, :starting, :ending, :joints, :current_point, :total_points
-  def setup
-    @dot = Dot.new
+  attr_accessor :starting_dot, :ending_dot, :starting, :ending, :joints, 
+    :current_point, :total_points, :mousy
+    
+  def setup    
+    @starting_dot = Dot.new
+    @ending_dot = Dot.new
     @joints = 1
-    frame_rate 20
+    frame_rate 30
     smooth
+    make_positions
     draw
+    
   end
   
   def draw_background
@@ -19,23 +24,20 @@ class Elbows < Processing::App
   
   def make_positions
     @starting = Position.new
-    @ending = Position.new 
+    @ending = Position.new
+    @mousy = Position.new nil, :follow => :mouse
   end
   
   def draw
     draw_background
-    make_positions
     noFill
     beginShape
     starting.to_vertex
-      @total_points = rand(30)+1
+      @total_points = 10
       @current_point = 1
-      if (rand 2) == 0
-        d = :vert
-      else
-        d = :horiz
-      end
-      draw_points 0,0, d
+      direction = ((rand 2) == 0) ? :vert : :horiz
+      
+      draw_points 0,0, direction
     ending.to_vertex
     endShape
     
@@ -76,16 +78,26 @@ class Elbows < Processing::App
   end
   
   def draw_dots
-    dot.shift starting
-    dot.show
-    dot.shift ending
-    dot.show :fill_color => [100] # end point is grey
+    starting_dot.shift starting
+    starting_dot.show
+    ending_dot.shift ending
+    ending_dot.show :fill_color => [100] # end point is grey
   end
   
   def relative_rand num
     r = rand num
     return r if num.abs == num
     r * -1  
+  end
+  
+  def mouse_pressed
+    starting.follow = :mouse if starting_dot.clicked?
+    ending.follow = :mouse if ending_dot.clicked?
+  end
+  
+  def mouse_released
+    starting.follow = nil
+    ending.follow = nil
   end
 end
 

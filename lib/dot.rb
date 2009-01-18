@@ -36,4 +36,11 @@ class Dot
       P.ellipse x_offset, y_offset, 3, 3
     end
   end
+  
+  def clicked?
+    puts P.mouseX
+    puts x_offset
+    P.mouseX > x_offset - 10 and P.mouseX < x_offset + 10 and
+    P.mouseY > y_offset - 10 and P.mouseY < y_offset + 10
+  end
 end

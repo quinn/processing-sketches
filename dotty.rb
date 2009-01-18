@@ -4,7 +4,15 @@ require 'lib/dot'
 
 class MySketch < Processing::App
   attr_accessor :dot, :last_pos
+  load_ruby_library "control_panel" 
+  
+  include Capture
+  
   def setup
+    control_panel do |c|
+      c.button :saveFrame
+    end
+    
     self.dot = Dot.new
     pos = Position.new
     self.last_pos = pos
@@ -14,7 +22,7 @@ class MySketch < Processing::App
   end
   
   def draw    
-    fill 100+rand(40),100+rand(40), 100+rand(80), 10
+    fill 100+rand(40),100+rand(40), 100+rand(80), 5
     rect -1, -1, P.width+1, P.height+1
     
     pos = Position.new last_pos
