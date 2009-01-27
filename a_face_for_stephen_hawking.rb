@@ -9,7 +9,7 @@ class FaceForStephenHawking < Processing::App
   load_ruby_library "boids"
   load_java_library "minim"
   load_java_library "opengl"
-  load_java_library "angela_audio"
+  load_java_library "audio"
   include_package "processing.opengl"
   include_package "javax.media.opengl"
   include_class "audioInterp.AudioIn"

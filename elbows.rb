@@ -1,8 +1,10 @@
 require 'ruby-processing'
 require 'lib/position'
 require 'lib/dot'
+require 'lib/mixins/capture'
 
 class Elbows < Processing::App
+  include Capture
   attr_accessor :starting_dot, :ending_dot, :starting, :ending, :joints, 
     :current_point, :total_points, :mousy
     
