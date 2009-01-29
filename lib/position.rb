@@ -2,7 +2,13 @@ class Position
   attr_accessor :x, :y, :follow
   
   def initialize last_pos = nil, opts = {}
+    if last_pos.is_a? Symbol
+      @follow = last_pos
+      return
+    end
+    
     @follow = opts.delete :follow
+    
     if last_pos
       if rand(2) == 1
         self.x = last_pos.x + rand(100)*(rand(3)-1)
@@ -26,12 +32,14 @@ class Position
   end
   
   def x
-    return @x unless follow
-    @x = P.mouseX
+    return P.width/2 if follow == :center
+    return P.mouseX if follow == :mouse
+    @x
   end
   
   def y
-    return @y unless follow
-    @y = P.mouseY
+    return P.height/2 if follow == :center
+    return P.mouseY if follow == :mouse
+    @y
   end
 end

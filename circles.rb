@@ -4,33 +4,62 @@ require 'lib/dot'
 require 'lib/mixins/capture'
 
 class MySketch < Processing::App
-  attr_accessor :dot, :last_pos
-  include Capture
-
+  attr_accessor :i
+  
   def setup
-    self.dot = Dot.new
-    pos = Position.new
-    self.last_pos = pos
-    
-    frame_rate 15
+    @i = 2400
+    #frame_rate 300
     smooth
+    background 255,255,255
   end
   
-  def draw    
-    fill 100+rand(40),100+rand(40), 100+rand(80), 5
-    rect -1, -1, P.width+1, P.height+1
+  def draw
+    noStroke
+    #fill t55,t55,t55
+    fill_brights
+    @i -= rand(50)/10.0
+    return if @i < 0
+    Circle.new Position.new(:center), @i
     
-    pos = Position.new last_pos
-    
-    line pos.x, pos.y, last_pos.x, last_pos.y
-    dot.show
-    self.last_pos = pos
-    
-    dot.shift last_pos
-    dot.show
   end
   
   include Capture
+  
+  def t55
+    return 0 if rand(2) == 0
+    255
+  end
+  
+  def fill_brights
+    fill *([
+      [255,0,0]   ,          # red
+      #[0,255,0]   ,         # green
+      [0,0,255]   ,          # blue
+      [0,255,255] ,          # cyan
+      #[255,255,0] ,         # yellow
+      [255,0,255] ,          # magenta
+      [255,127,0] ,          # orange
+    ].shuffle!.first.push rand(200))
+    #fill *([255,0,0].shuffle!.push rand(100))
+    
+  end
 end
 
-P = MySketch.new :title => "My Sketch", :width => 500, :height => 500
+class Circle
+  def initialize position, radius
+    P.ellipse position.x, position.y, radius, radius
+  end
+end
+
+class Color
+  
+  
+end
+
+class Array
+  def shuffle!
+    size.downto(1) { |n| push delete_at(rand(n)) }
+    self
+  end
+end
+P = MySketch.new :title => "Circles", :width => 500, :height => 500, :full_screen => true
