@@ -13,6 +13,7 @@ class MySketch < Processing::App
     smooth
     @opacity = 30
     @thickness = 100
+    @red = true
     draw
   end
   
@@ -20,6 +21,15 @@ class MySketch < Processing::App
     control_panel do |c|
       c.slider(:opacity, 0..255)
       c.slider(:thickness, 30..500)
+      c.checkbox :red
+      c.checkbox :green
+      c.checkbox :blue
+      c.checkbox :cyan
+      c.checkbox :yellow
+      c.checkbox :magenta
+      c.checkbox :orange
+      c.checkbox :black
+      #c.checkbox :white
     end
   end
   
@@ -51,17 +61,20 @@ class MySketch < Processing::App
   end
   
   def fill_brights
-    fill *([
-      [255,0,0]     ,          # red
-      #[0,255,0]     ,         # green
-      #[0,0,255]     ,          # blue
-      [0,255,255]   ,          # cyan
-      #[255,255,0]   ,         # yellow
-      [255,0,255]   ,          # magenta
-      [255,127,0]   ,          # orange
-      [0,0,0]       ,          # black
-      [255,255,255] ,          # white
-    ].shuffle!.first.push rand(@opacity))
+    colors = []
+    colors << [255,0,0]     if @red
+    colors << [0,255,0]     if @green
+    colors << [0,0,255]     if @blue
+    colors << [0,255,255]   if @cyan
+    colors << [255,255,0]   if @yellow
+    colors << [255,0,255]   if @magenta
+    colors << [255,127,0]   if @orange
+    colors << [0,0,0]       if @black
+    colors << [255,255,255] if @white
+    
+    fill_with = colors.shuffle!.first
+    fill_with ||= [255,255,255]
+    fill *(fill_with.push rand(@opacity))
     #fill *([255,0,0].shuffle!.push rand(100))
     
   end
