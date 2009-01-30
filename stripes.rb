@@ -127,7 +127,6 @@ class Stripe
   def initialize thickness
     P.rect 0, ( thickness ), P.width+200, P.height
   end
-  
 end
 
 class Array
@@ -136,4 +135,5 @@ class Array
     self
   end
 end
+
 P = MySketch.new :title => "Stripes", :width => 500, :height => 500#, :full_screen => true
