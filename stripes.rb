@@ -8,7 +8,7 @@ class MySketch < Processing::App
   
   def setup
     setup_controls
-    frame_rate 10
+    frame_rate 1
     no_stroke
     smooth
     @opacity = 100
