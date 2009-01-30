@@ -8,11 +8,24 @@ class MySketch < Processing::App
   
   def setup
     setup_controls
-    frame_rate 20
+    frame_rate 1
     no_stroke
     smooth
-    @opacity = 30
+    @opacity = 100
     @thickness = 100
+    
+    
+    @red     = true
+    #@green   = true
+    #@blue    = true
+    #@cyan    = true
+    #@yellow  = true
+    #@magenta = true
+    #@orange  = true
+    #@black   = true
+    #@white   = true
+    
+    reset_i
     draw
   end
   
@@ -33,40 +46,52 @@ class MySketch < Processing::App
   end
   
   def draw
-    background 255,255,255
+    #background 255,255,255
     reset_i
-    recurse_shape :circle
+    recurse_stripe
+    
+    load_pixels
+    height.times do |i|
+      #puts "#{pixels[0] - pixels[i*width]}"
+      if (pixels[0] - pixels[i*width]).abs < 100000 and i > 30
+        pattern = get 0, 0, width, i
+        (height/i+1).times do |ii|
+          image pattern, 0, i*ii
+        end
+        #fill 0,0,0
+        #rect 0, i*2, 1000,1000
+        break;
+      end
+    end
+    
+    #update_pixels
+    # fill pixels[0]
+    # rect(30, 20, 55, 55)
   end
   
-  def recurse_shape shape
-    call :"recurse_#{shape}"
+  def with_pixels range, &blk
+    load_pixels
+    range.each do |i|
+      pixels[i] = blk.call i
+    end
+    update_pixels
   end
   
-  def recurse_circle
-    recurse_circle if drawing_circle
+  def drawing_stripe
+    @i -= rand(@thickness)/10.0
+    return if @i < ((P.height+200) * -1)
+    fill_brights
+    Stripe.new @i    
   end
   
   def recurse_stripe
     recurse_stripe if drawing_stripe
   end
-
-  def drawing_stripe
-    @i -= rand(@thickness)/10.0
-    return if @i < 0
-    fill_brights
-    Circle.new Position.new(:center), @i    
-  end
-  
-  def drawing_circle
-    @i -= rand(@thickness)/10.0
-    return if @i < 0
-    fill_brights
-    Circle.new Position.new(:center), @i
-  end
   
   def reset_i
-    @i = 800
+    @i = 0
   end
+  
   include Capture
   
   def t55
@@ -89,8 +114,6 @@ class MySketch < Processing::App
     fill_with = colors.shuffle!.first
     fill_with ||= [255,255,255]
     fill *(fill_with.push rand(@opacity))
-    #fill *([255,0,0].shuffle!.push rand(100))
-    
   end
 end
 
@@ -101,7 +124,9 @@ class Circle
 end
 
 class Stripe
-  
+  def initialize thickness
+    P.rect 0, ( thickness ), P.width+200, P.height
+  end
   
 end
 
@@ -111,4 +136,4 @@ class Array
     self
   end
 end
-P = MySketch.new :title => "Circles", :width => 500, :height => 500#, :full_screen => true
+P = MySketch.new :title => "Stripes", :width => 500, :height => 500#, :full_screen => true
