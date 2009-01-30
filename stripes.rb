@@ -8,11 +8,12 @@ class MySketch < Processing::App
   
   def setup
     setup_controls
-    frame_rate 1
+    frame_rate 10
     no_stroke
     smooth
     @opacity = 100
     @thickness = 100
+    @cropping_height = 100
     
     
     @red     = true
@@ -33,13 +34,14 @@ class MySketch < Processing::App
     control_panel do |c|
       c.slider(:opacity, 0..255)
       c.slider(:thickness, 30..500)
+      c.slider(:cropping_height, 1..(height/2))
       c.checkbox :red
       c.checkbox :green
       c.checkbox :blue
       c.checkbox :cyan
       c.checkbox :yellow
       c.checkbox :magenta
-      c.checkbox :orange
+      #c.checkbox :orange
       c.checkbox :black
       #c.checkbox :white
     end
@@ -49,20 +51,21 @@ class MySketch < Processing::App
     #background 255,255,255
     reset_i
     recurse_stripe
-    
+    #rotate 0.1
     load_pixels
-    height.times do |i|
-      #puts "#{pixels[0] - pixels[i*width]}"
-      if (pixels[0] - pixels[i*width]).abs < 100000 and i > 30
-        pattern = get 0, 0, width, i
-        (height/i+1).times do |ii|
-          image pattern, 0, i*ii
+    #height.times do |i|
+      # puts "#{pixels[0] - pixels[i*width]}"
+      # if (pixels[0] - pixels[i*width]).abs < 100000 and i > 30
+        @cropping_height = @cropping_height.to_i
+        pattern = get 0, 0, width, @cropping_height
+        (height/@cropping_height+1).to_i.times do |ii|
+          image pattern, 0, @cropping_height*ii
         end
         #fill 0,0,0
         #rect 0, i*2, 1000,1000
-        break;
-      end
-    end
+        #break;
+      # end
+    #end
     
     #update_pixels
     # fill pixels[0]
