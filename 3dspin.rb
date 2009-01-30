@@ -17,12 +17,19 @@ class MySketch < Processing::App
     
     control_panel do |c|
       c.slider :sensitivity, 500..10000
+      c.slider :light_x, -20..20
+      c.slider :light_y, -20..20
+      c.slider :light_z, -20..20
     end
     @sensitivity = 1000
     @bg_switch = 0
-    @squares = [FloatySquare.new,FloatySquare.new,FloatySquare.new,FloatySquare.new,FloatySquare.new,FloatySquare.new,FloatySquare.new,FloatySquare.new,FloatySquare.new,FloatySquare.new,FloatySquare.new,FloatySquare.new,FloatySquare.new,FloatySquare.new,FloatySquare.new,FloatySquare.new,FloatySquare.new,FloatySquare.new,FloatySquare.new]
+    @squares = [FloatySquare.new,FloatySquare.new,FloatySquare.new,FloatySquare.new,FloatySquare.new,FloatySquare.new,FloatySquare.new,FloatySquare.new,FloatySquare.new]
     @minim = Minim.new self
     @input = minim.get_line_in
+    
+    @light_x = 12
+    @light_y = 3
+    @light_z = -4
     
     no_stroke
     draw
@@ -30,12 +37,13 @@ class MySketch < Processing::App
   
   def draw
     @bg_switch += 1
-    background 255,255,255  if @bg_switch/3 == @bg_switch/3.0
+    background 255,255,255#  if @bg_switch/3 == @bg_switch/3.0
     rotate_view
   end
   
   def rotate_view
     translate(width/2, height/2);
+    directionalLight(200, 200, 200, @light_x,@light_y,@light_z)
     @squares.each{|s| s.show}
   end
 end
@@ -52,7 +60,7 @@ class FloatySquare
       attr_accessor :scalar_#{v}, :#{v}
       def do_#{v}_stuff
         @scalar_#{v} = (rand(10)+1)/100.0
-        @#{v} = rand(10)/10.0
+        @#{v} = rand(20)/10.0
       end
 
       def rotate_#{v}
@@ -69,7 +77,7 @@ class FloatySquare
     end
     
     m = (P.input.mix.level*P.sensitivity).to_i
-    P.rect(m,m, m,m)
+    P.rect(m,m,m,m)
   end
   
   def fill_brights
