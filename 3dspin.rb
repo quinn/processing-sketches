@@ -21,7 +21,7 @@ class MySketch < Processing::App
       c.slider :light_y, -20..20
       c.slider :light_z, -20..20
     end
-    @sensitivity = 1000
+    @sensitivity = 5000
     @bg_switch = 0
     @squares = [FloatySquare.new,FloatySquare.new,FloatySquare.new,FloatySquare.new,FloatySquare.new,FloatySquare.new,FloatySquare.new,FloatySquare.new,FloatySquare.new]
     @minim = Minim.new self
@@ -75,9 +75,11 @@ class FloatySquare
     %w{x y z}.each do |v|
       send "rotate_#{v}"
     end
-    
-    m = (P.input.mix.level*P.sensitivity).to_i
+    @prev_m ||= 0
+    m = (P.input.mix.level*P.sensitivity)
+    m = (@prev_m-m).abs < 12.0 ? @prev_m : m
     P.rect(m,m,m,m)
+    @prev_m = m
   end
   
   def fill_brights
