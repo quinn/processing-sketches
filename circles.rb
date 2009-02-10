@@ -8,7 +8,7 @@ class MySketch < Processing::App
   
   def setup
     setup_controls
-    frame_rate 20
+    frame_rate 1
     no_stroke
     smooth
     @opacity = 30
@@ -34,7 +34,7 @@ class MySketch < Processing::App
   end
   
   def draw
-    background 255,255,255
+    #background 255,255,255
     reset_i
     recurse_circle
   end

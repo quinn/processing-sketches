@@ -44,6 +44,10 @@ class MySketch < Processing::App
   def rotate_view
     translate(width/2, height/2);
     directionalLight(200, 200, 200, @light_x,@light_y,@light_z)
+    @whatev||= 0
+    @whatev += 0.05
+    puts @whatev
+    rotate_y @whatev
     @squares.each{|s| s.show}
   end
 end

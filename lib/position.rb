@@ -9,7 +9,7 @@ class Position
     
     @follow = opts.delete :follow
     
-    if last_pos
+    if last_pos.is_a? Position
       if rand(2) == 1
         self.x = last_pos.x + rand(100)*(rand(3)-1)
         self.x = P.width if x > P.width
