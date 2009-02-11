@@ -2,6 +2,7 @@ require 'ruby-processing'
 
 class RandomShapes < Processing::App
   attr_accessor :shape, :timeout, :rotation
+  load_libraries :'ruby-svg'
   def setup
     frame_rate 25
     @timeout = 0
@@ -25,7 +26,13 @@ class RandomShapes < Processing::App
       @timeout = 100
       @rotation = 1.5
       
-      log_shape
+      # log_shape
+      puts @shape
+      svg = SVG.new
+      poly = SVGPolygon.new
+      poly.instance_eval @shape
+      svg.content << poly
+      puts svg.to_xml
     else
       @timeout -= 1
     end
@@ -45,7 +52,7 @@ class RandomShapes < Processing::App
   def log_shape
     log = File.open 'shapes.log', 'a'
     log << "\nCurrent Time: #{Time.now.to_s} \n"
-    log << @shape    
+    log << @shape
   end
 end
 
