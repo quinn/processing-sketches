@@ -2,7 +2,9 @@ require 'ruby-processing'
 
 class RandomShapes < Processing::App
   attr_accessor :shape, :timeout, :rotation
-  load_libraries :'ruby-svg'
+  load_libraries :gemmings
+  load_gem 'quinn-ruby-svg', :load_as => 'ruby-svg'
+  
   def setup
     frame_rate 25
     @timeout = 0
@@ -11,7 +13,6 @@ class RandomShapes < Processing::App
   
   def draw
     background 200
-    beginShape
     
     number_of_times = rand(20)
     shape_width = rand(width)
@@ -26,23 +27,25 @@ class RandomShapes < Processing::App
       @timeout = 100
       @rotation = 1.5
       
-      # log_shape
-      puts @shape
-      svg = SVG.new
-      poly = SVGPolygon.new
-      poly.instance_eval @shape
-      svg.content << poly
-      puts svg.to_xml
+      svg = SVG.new width, height
+      
+      eval "svg = with_svg do
+        begin_shape
+        instance_eval do
+          #{@shape}
+        end
+        end_shape CLOSE
+      end"
+      puts svg.to_s
     else
       @timeout -= 1
     end
     
     reposition
-
-    instance_eval @shape
-    endShape CLOSE
+    
+    beginShape; instance_eval @shape; endShape CLOSE;
   end
-  
+    
   def reposition
     translate(width/@rotation+70, height/@rotation-120)
     @rotation += 0.1
