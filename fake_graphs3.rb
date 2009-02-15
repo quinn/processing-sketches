@@ -30,9 +30,9 @@ class MySketch < Processing::App
     20.times do |n|
       n += 1
       fill 0
-      text_font create_font("Arial", 10)
-      
+      text_font create_font("Arial", 10)      
       text "#{n*10}.00", 85, n*20+3
+      
       line 50, n*20, 80, n*20
       ellipse 50, n*20, 2, 2
     end

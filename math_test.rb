@@ -12,10 +12,13 @@ class MySketch < Processing::App
   
   def setup
     setup_controls
-    frame_rate 30
+    frame_rate 40
     
     smooth
-    no_stroke
+    #no_stroke
+    fill 0
+    text_font create_font("Arial", 10)      
+    @i = 0.0
     draw
   end
   
@@ -27,25 +30,39 @@ class MySketch < Processing::App
   
   def draw
     reset
-  	xPct = mouseX / width.to_f
-
-  	nStarPts = (3+xPct * 20).to_i
-  	angleChangePerPt = TWO_PI / nStarPts
-  	innerRadius = 300
-  	origx = width/2
-  	origy = height/2
-  	angle = 30;
-
-  	begin_shape
-  	nStarPts.times do |i|
-			x = origx + innerRadius * cos(angle);
-			y = origy + innerRadius * sin(angle);
-			vertex x, y
-  		angle += angleChangePerPt;
-  	end
-	  end_shape
     
+    startx = 200
+    starty = 50
+    endx   = 300
+    endy   = 500
+    
+    theight = (starty - endy).abs
+    twidth  = (startx - endx).abs
+    length = Math.sqrt(twidth**2 + theight**2)
+    
+    angle = atan(twidth.to_f/theight)
+    offset_angle = radians(90) - angle
+    
+    stroke 0,0,0
+    line startx,starty,endx,endy
+    
+    stroke 255,0,0
+    line startx,starty,startx,endy
+    line startx,endy,endx,endy
+
+    @i = offset_angle #+= 0.01
+    line startx,starty,startx+cos(@i)*length, starty+sin(@i)*length 
     @ready_for_output = true
+  end
+  def do_line xoff,yoff
+		line xoff, yoff, 300, yoff
+  end
+  def radians deg
+    deg.to_f*(PI/180)
+  end
+  
+  def perp radian
+    radian - radians(90)
   end
   
   def output_svg
@@ -75,4 +92,4 @@ class Array
   end
 end
 
-P = MySketch.new :title => "Polygon", :width => 700, :height => 700#, :full_screen => true
+P = MySketch.new :title => "PolygonGraph", :width => 700, :height => 700#, :full_screen => true

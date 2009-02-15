@@ -29,25 +29,26 @@ class MySketch < Processing::App
     reset
   	xPct = mouseX / width.to_f
 
-  	nStarPts = (3+xPct * 20).to_i
-  	angleChangePerPt = TWO_PI / nStarPts
-  	innerRadius = 300
-  	origx = width/2
-  	origy = height/2
-  	angle = 30;
+    background(51);  
+    #a = atan2(mouseY-y, mouseX-x).to_f; 
 
-  	begin_shape
-  	nStarPts.times do |i|
-			x = origx + innerRadius * cos(angle);
-			y = origy + innerRadius * sin(angle);
-			vertex x, y
-  		angle += angleChangePerPt;
-  	end
-	  end_shape
+    translate(x, y); 
+    rotate(radians(mouseX)); 
+    stroke(255, 0, 0);  
+    curve(500, 200, 0, 0, 300, 300, 500, 200);  
+    begin_shape(); 
+    vertex(100, 20); 
+    vertex(50, 50); 
+    vertex(30, 30); 
+    end_shape(); 
     
     @ready_for_output = true
   end
   
+  def radians deg
+    deg*(PI/180)
+  end
+
   def output_svg
     unless ready_for_output
       puts "\033[1mwarning:\033[0m not ready for output"
@@ -75,4 +76,4 @@ class Array
   end
 end
 
-P = MySketch.new :title => "Polygon", :width => 700, :height => 700#, :full_screen => true
+P = MySketch.new :title => "Rotate", :width => 700, :height => 700#, :full_screen => true
