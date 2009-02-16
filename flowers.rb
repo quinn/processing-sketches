@@ -1,7 +1,8 @@
 require 'ruby-processing'
-#require 'lib/position'
+require 'lib/position'
 #require 'lib/dot'
 require 'lib/shapes'
+require 'lib/trig'
 require 'lib/mixins/capture'
 
 class MySketch < Processing::App
@@ -10,6 +11,7 @@ class MySketch < Processing::App
   load_gem 'quinn-ruby-svg', :load_as => 'ruby-svg'
   
   include SVG::Processing
+  include Trig
   
   def setup
     setup_controls
@@ -22,8 +24,8 @@ class MySketch < Processing::App
     fill 0
     text_font create_font("Arial", 10)      
     @offset = 0
-
-    @timeout = 5
+    @t = 15
+    @timeout = @t
     draw
   end
   
@@ -34,19 +36,23 @@ class MySketch < Processing::App
   end
   
   def draw
-    fill 255,255,255, 5
+    fill 255,255,255, 1
     no_stroke
     rect 0,0, width,height
-    stroke 255,0,0
+
+    color = [200+rand(55), rand(50), 30]
+    no_stroke
+    fill_brights
     
     @timeout -= 1
     return if @timeout != 0
-    @timeout = 5
+    @timeout = @t
     
   	innerRadius = 50
-
-  	origx = rand(width)
-  	origy = rand(height)
+    
+    endp = Position.new
+  	origx = endp.x
+  	origy = endp.y
   	
     points = 3 + rand(5)
     angleChangePerPt = TWO_PI / points
@@ -54,14 +60,16 @@ class MySketch < Processing::App
   	start_angle = radians rand(60)
     @offset = 20+rand(200)
     
+    startp = Position.new
+    startp.x = rand(width)
+    startp.y = rand(100) + height
+  	connect startp, endp
+
 	  points.times do |i|
 	    angle = start_angle + angleChangePerPt*i
       x = origx + innerRadius
 			y = origy + innerRadius
 			
-
-      stroke 255,0,0
-      no_fill
       end_x = x = origx
 			end_y = y = origy
       
@@ -75,65 +83,39 @@ class MySketch < Processing::App
       off1 = (angle_off x,y, c1x,c1y)         - radians(@offset)
       off2 = (angle_off c2x,c2y, end_x,end_y) + radians(@offset)
       
-      stroke 255,0,0
-      fill   255,0,0
 			bezier x,y, x+cos(off1)*(l1),y+sin(off1)*(l1), end_x-cos(off2)*l2, end_y-sin(off2)*l2, end_x, end_y
-      end
-		
+    end
+
     if creating_output
       save_image_action
       save_svg_file
       @creating_output = false
     end
   end
-  
-  def hypott startx,starty,endx,endy
-    theight = (starty - endy)
-    twidth  = (startx - endx)
-    length = Math.sqrt(twidth**2 + theight**2)
-    length
-  end
-  
-  def angle_off startx,starty,endx,endy
-    theight = (starty - endy)
-    twidth  = (startx - endx)
-    angle = atan(twidth.to_f/theight)
-    # i have no idea what these next 3 lines do
-    # i just wrote them
-    offset = (twidth > 0) ? radians(180) : 0
-    offset -= ((theight > 0) and !(twidth > 0)) ? radians(180) : 0
-    offset += (!(theight > 0) and (twidth > 0)) ? radians(180) : 0
     
-    
-    
-    offset_angle = offset + radians(90) - angle
-  end
-  
   def quadrant startx,starty,endx,endy
     
   end
-  
-  def radians deg
-    deg.to_f*(PI/180.0)
-  end
-  
-  def degrees radian
-    radian/(PI/180.0)
-  end
-  
-  def perp radian
-    radian.to_f - radians(90.0)
+    
+  def fill_brights
+    colors = []
+    colors << [255,0,0]      # red
+    #colors << [0,255,0]      # green
+    colors << [0,0,255]      # blue
+    #colors << [0,255,255]    # cyan
+    colors << [255,255,0]    # yellow
+    #colors << [255,0,255]    # magenta
+    colors << [220,0,200]    # purple
+    colors << [255,127,0]    # orange
+    #colors << [0,0,0]        # black
+    colors << [255,255,255]  # white
+    
+    fill_with   = colors.shuffle!.first
+    fill_with ||= [255,255,255]
+    fill *fill_with
   end
   
   def output_svg
-    # unless ready_for_output
-    #   puts "\033[1mwarning:\033[0m not ready for output"
-    #   return
-    # end
-    # @saving
-    # save_image_action
-    # save_svg_file
-    # puts "file saved"
     @creating_output = true
   end
   
