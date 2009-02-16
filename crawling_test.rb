@@ -34,47 +34,25 @@ class MySketch < Processing::App
   def draw
     reset
     
-    p1 = Position.new
-    p2 = Position.new
-    p3 = Position.new
+    a = Position.new
+    z = Position.new
+    t = (3+rand(5))
+    distance = a.y - z.y
+    interval = distance/t.to_f
+    Circle.new a, 7
+    Circle.new z, 7
     
-    p2.x = p1.x
-    d = (p1.y-p2.y).abs
-    p3.y = if p1.y > p2.y
-      d/2 + p2.y
-    else
-      d/2 + p1.y
+    
+    t.times do
+      dir = rand(2)
+      jump = rand(interval*2)
+      if dir == 0
+        ellipse a.x
+      else
+        
+      end
     end
     
-    Circle.new p1, 7
-    Circle.new p2, 7
-    fill 255, 0, 0
-    Circle.new p3, 7
-    fill 0
-    
-    points = 6
-
-    angle = angle_off    p3.x, p3.y, p1.x, p1.y
-    innerRadius = hypott p3.x, p3.y, p1.x, p1.y
-    
-    angleChangePerPt = angle / points
-    
-    
-    stroke 255, 0, 0
-    Line.new p3.x, p3.y, innerRadius, angle
-    stroke 0
-    
-    points.times do |i|
-			# draw polygon
-			angle = angleChangePerPt * i
-			x = p3.x + innerRadius * cos(angle)
-			y = p3.y + innerRadius * sin(angle)
-      
-      line p3.x, p3.y, x, y
-      
-      stroke 0
-      fill 0,0,0
-  	end
     
     @ready_for_output = true
   end
@@ -111,4 +89,4 @@ class MySketch < Processing::App
   include Capture
 end
 
-P = MySketch.new :title => "MathTest", :width => 700, :height => 700#, :full_screen => true
+P = MySketch.new :title => "CrawlingTest", :width => 700, :height => 700#, :full_screen => true
