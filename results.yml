@@ -1,0 +1,241 @@
+--- 
+- !ruby/object:TimesArticleSearchResult 
+  facets: !ruby/object:Java::OrgJson::JSONObject 
+    java_object: !ruby/object:Java::JavaObject {}
+
+  total: 184
+- !ruby/object:TimesArticleSearchResult 
+  facets: !ruby/object:Java::OrgJson::JSONObject 
+    java_object: !ruby/object:Java::JavaObject {}
+
+  total: 235
+- !ruby/object:TimesArticleSearchResult 
+  facets: !ruby/object:Java::OrgJson::JSONObject 
+    java_object: !ruby/object:Java::JavaObject {}
+
+  total: 177
+- !ruby/object:TimesArticleSearchResult 
+  facets: !ruby/object:Java::OrgJson::JSONObject 
+    java_object: !ruby/object:Java::JavaObject {}
+
+  total: 193
+- !ruby/object:TimesArticleSearchResult 
+  facets: !ruby/object:Java::OrgJson::JSONObject 
+    java_object: !ruby/object:Java::JavaObject {}
+
+  total: 169
+- !ruby/object:TimesArticleSearchResult 
+  facets: !ruby/object:Java::OrgJson::JSONObject 
+    java_object: !ruby/object:Java::JavaObject {}
+
+  total: 189
+- !ruby/object:TimesArticleSearchResult 
+  facets: !ruby/object:Java::OrgJson::JSONObject 
+    java_object: !ruby/object:Java::JavaObject {}
+
+  total: 169
+- !ruby/object:TimesArticleSearchResult 
+  facets: !ruby/object:Java::OrgJson::JSONObject 
+    java_object: !ruby/object:Java::JavaObject {}
+
+  total: 209
+- !ruby/object:TimesArticleSearchResult 
+  facets: !ruby/object:Java::OrgJson::JSONObject 
+    java_object: !ruby/object:Java::JavaObject {}
+
+  total: 201
+- !ruby/object:TimesArticleSearchResult 
+  facets: !ruby/object:Java::OrgJson::JSONObject 
+    java_object: !ruby/object:Java::JavaObject {}
+
+  total: 202
+- !ruby/object:TimesArticleSearchResult 
+  facets: !ruby/object:Java::OrgJson::JSONObject 
+    java_object: !ruby/object:Java::JavaObject {}
+
+  total: 193
+- !ruby/object:TimesArticleSearchResult 
+  facets: !ruby/object:Java::OrgJson::JSONObject 
+    java_object: !ruby/object:Java::JavaObject {}
+
+  total: 213
+- !ruby/object:TimesArticleSearchResult 
+  facets: !ruby/object:Java::OrgJson::JSONObject 
+    java_object: !ruby/object:Java::JavaObject {}
+
+  total: 220
+- !ruby/object:TimesArticleSearchResult 
+  facets: !ruby/object:Java::OrgJson::JSONObject 
+    java_object: !ruby/object:Java::JavaObject {}
+
+  total: 182
+- !ruby/object:TimesArticleSearchResult 
+  facets: !ruby/object:Java::OrgJson::JSONObject 
+    java_object: !ruby/object:Java::JavaObject {}
+
+  total: 189
+- !ruby/object:TimesArticleSearchResult 
+  facets: !ruby/object:Java::OrgJson::JSONObject 
+    java_object: !ruby/object:Java::JavaObject {}
+
+  total: 159
+- !ruby/object:TimesArticleSearchResult 
+  facets: !ruby/object:Java::OrgJson::JSONObject 
+    java_object: !ruby/object:Java::JavaObject {}
+
+  total: 155
+- !ruby/object:TimesArticleSearchResult 
+  facets: !ruby/object:Java::OrgJson::JSONObject 
+    java_object: !ruby/object:Java::JavaObject {}
+
+  total: 209
+- !ruby/object:TimesArticleSearchResult 
+  facets: !ruby/object:Java::OrgJson::JSONObject 
+    java_object: !ruby/object:Java::JavaObject {}
+
+  total: 214
+- !ruby/object:TimesArticleSearchResult 
+  facets: !ruby/object:Java::OrgJson::JSONObject 
+    java_object: !ruby/object:Java::JavaObject {}
+
+  total: 179
+- !ruby/object:TimesArticleSearchResult 
+  facets: !ruby/object:Java::OrgJson::JSONObject 
+    java_object: !ruby/object:Java::JavaObject {}
+
+  total: 187
+- !ruby/object:TimesArticleSearchResult 
+  facets: !ruby/object:Java::OrgJson::JSONObject 
+    java_object: !ruby/object:Java::JavaObject {}
+
+  total: 214
+- !ruby/object:TimesArticleSearchResult 
+  facets: !ruby/object:Java::OrgJson::JSONObject 
+    java_object: !ruby/object:Java::JavaObject {}
+
+  total: 216
+- !ruby/object:TimesArticleSearchResult 
+  facets: !ruby/object:Java::OrgJson::JSONObject 
+    java_object: !ruby/object:Java::JavaObject {}
+
+  total: 305
+- !ruby/object:TimesArticleSearchResult 
+  facets: !ruby/object:Java::OrgJson::JSONObject 
+    java_object: !ruby/object:Java::JavaObject {}
+
+  total: 204
+- !ruby/object:TimesArticleSearchResult 
+  facets: !ruby/object:Java::OrgJson::JSONObject 
+    java_object: !ruby/object:Java::JavaObject {}
+
+  total: 189
+- !ruby/object:TimesArticleSearchResult 
+  facets: !ruby/object:Java::OrgJson::JSONObject 
+    java_object: !ruby/object:Java::JavaObject {}
+
+  total: 203
+- !ruby/object:TimesArticleSearchResult 
+  facets: !ruby/object:Java::OrgJson::JSONObject 
+    java_object: !ruby/object:Java::JavaObject {}
+
+  total: 208
+- !ruby/object:TimesArticleSearchResult 
+  facets: !ruby/object:Java::OrgJson::JSONObject 
+    java_object: !ruby/object:Java::JavaObject {}
+
+  total: 226
+- !ruby/object:TimesArticleSearchResult 
+  facets: !ruby/object:Java::OrgJson::JSONObject 
+    java_object: !ruby/object:Java::JavaObject {}
+
+  total: 206
+- !ruby/object:TimesArticleSearchResult 
+  facets: !ruby/object:Java::OrgJson::JSONObject 
+    java_object: !ruby/object:Java::JavaObject {}
+
+  total: 190
+- !ruby/object:TimesArticleSearchResult 
+  facets: !ruby/object:Java::OrgJson::JSONObject 
+    java_object: !ruby/object:Java::JavaObject {}
+
+  total: 189
+- !ruby/object:TimesArticleSearchResult 
+  facets: !ruby/object:Java::OrgJson::JSONObject 
+    java_object: !ruby/object:Java::JavaObject {}
+
+  total: 184
+- !ruby/object:TimesArticleSearchResult 
+  facets: !ruby/object:Java::OrgJson::JSONObject 
+    java_object: !ruby/object:Java::JavaObject {}
+
+  total: 197
+- !ruby/object:TimesArticleSearchResult 
+  facets: !ruby/object:Java::OrgJson::JSONObject 
+    java_object: !ruby/object:Java::JavaObject {}
+
+  total: 173
+- !ruby/object:TimesArticleSearchResult 
+  facets: !ruby/object:Java::OrgJson::JSONObject 
+    java_object: !ruby/object:Java::JavaObject {}
+
+  total: 186
+- !ruby/object:TimesArticleSearchResult 
+  facets: !ruby/object:Java::OrgJson::JSONObject 
+    java_object: !ruby/object:Java::JavaObject {}
+
+  total: 201
+- !ruby/object:TimesArticleSearchResult 
+  facets: !ruby/object:Java::OrgJson::JSONObject 
+    java_object: !ruby/object:Java::JavaObject {}
+
+  total: 194
+- !ruby/object:TimesArticleSearchResult 
+  facets: !ruby/object:Java::OrgJson::JSONObject 
+    java_object: !ruby/object:Java::JavaObject {}
+
+  total: 198
+- !ruby/object:TimesArticleSearchResult 
+  facets: !ruby/object:Java::OrgJson::JSONObject 
+    java_object: !ruby/object:Java::JavaObject {}
+
+  total: 175
+- !ruby/object:TimesArticleSearchResult 
+  facets: !ruby/object:Java::OrgJson::JSONObject 
+    java_object: !ruby/object:Java::JavaObject {}
+
+  total: 209
+- !ruby/object:TimesArticleSearchResult 
+  facets: !ruby/object:Java::OrgJson::JSONObject 
+    java_object: !ruby/object:Java::JavaObject {}
+
+  total: 173
+- !ruby/object:TimesArticleSearchResult 
+  facets: !ruby/object:Java::OrgJson::JSONObject 
+    java_object: !ruby/object:Java::JavaObject {}
+
+  total: 158
+- !ruby/object:TimesArticleSearchResult 
+  facets: !ruby/object:Java::OrgJson::JSONObject 
+    java_object: !ruby/object:Java::JavaObject {}
+
+  total: 166
+- !ruby/object:TimesArticleSearchResult 
+  facets: !ruby/object:Java::OrgJson::JSONObject 
+    java_object: !ruby/object:Java::JavaObject {}
+
+  total: 241
+- !ruby/object:TimesArticleSearchResult 
+  facets: !ruby/object:Java::OrgJson::JSONObject 
+    java_object: !ruby/object:Java::JavaObject {}
+
+  total: 185
+- !ruby/object:TimesArticleSearchResult 
+  facets: !ruby/object:Java::OrgJson::JSONObject 
+    java_object: !ruby/object:Java::JavaObject {}
+
+  total: 220
+- !ruby/object:TimesArticleSearchResult 
+  facets: !ruby/object:Java::OrgJson::JSONObject 
+    java_object: !ruby/object:Java::JavaObject {}
+
+  total: 230

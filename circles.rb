@@ -2,14 +2,15 @@ require 'ruby-processing'
 require 'lib/position'
 require 'lib/dot'
 require 'lib/mixins/capture'
+require 'pathname'
 
 class MySketch < Processing::App
+  load_libraries :control_panel, :pdf
+  import "processing.pdf"
+  #include PGraphicsPDF
+  
   attr_accessor :i
-  load_libraries :gemmings
-  load_gem 'quinn-ruby-svg', :load_as => 'ruby-svg'
-  
-  include SVG::Processing
-  
+
   def setup
     setup_controls
     frame_rate 1
@@ -38,11 +39,13 @@ class MySketch < Processing::App
   end
   
   def draw
-    #background 255,255,255
+    begin_record(PDF, "#{Pathname.new(__FILE__).realpath.parent}/pdfs/circles-####.pdf" ) if @record
+    
     reset_i
     recurse_circle
-    save_svg_file
-    reset_svg
+    
+    end_record if @record
+    @record = false
   end
   
   def recurse_circle
@@ -82,6 +85,10 @@ class MySketch < Processing::App
     fill_with ||= [255,255,255]
     fill *(fill_with.push rand(@opacity))
     #fill *([255,0,0].shuffle!.push rand(100))
+  end
+  
+  def mouse_pressed
+    @record = true
   end
 end
 
