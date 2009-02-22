@@ -77,7 +77,7 @@ class MySketch < Processing::App
       end
     end
     
-    threads.each{|th| th.join } 
+    threads.each{|th| th.join} 
   end
   
   def draw
