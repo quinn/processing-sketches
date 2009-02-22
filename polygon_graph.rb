@@ -19,7 +19,7 @@ class MySketch < Processing::App
     no_stroke
     
     fill 0
-    text_font create_font("Arial", 10)      
+    text_font create_font("Arial", 10)
     @offset = 0
     # http://api.nytimes.com/svc/search/v1/article?query=japan%20publication_year:[1981]%20publication_month:[2]&fields=+&facets=org_facet&&api-key=7ea86ecc92866e9cf37c5f16cd205356:2:57988907
     # http://api.nytimes.com/svc/search/v1/article?query=japan%20publication_year:[1981]%20publication_month:[09]&fields=+&facets=org_facet&api-key=7ea86ecc92866e9cf37c5f16cd205356:2:57988907

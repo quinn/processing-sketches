@@ -1,6 +1,7 @@
 require 'ruby-processing'
 require 'lib/position'
 require 'lib/dot'
+require 'lib/trig'
 require 'lib/mixins/capture'
 require 'net/http'
 require 'yaml'
@@ -15,7 +16,7 @@ end
 class MySketch < Processing::App
   load_libraries :control_panel, :json, :nyt_processing
   import "org.json"
-  
+  include Trig
   attr_accessor :minim, :input, :sensitivity, :words, :results, :colors
   
   def setup
@@ -24,7 +25,9 @@ class MySketch < Processing::App
     no_stroke
     
     smooth
-
+    
+    text_font create_font("Arial", 10)
+    
     @words = 'japan', 'china'
     @results = {}
     @colors  = {}
@@ -34,20 +37,10 @@ class MySketch < Processing::App
     draw
   end
   
-  def get_count word, startdate,stopdate
-    s = TimesArticleSearch.new
-    s.add_queries(word)
-    s.add_extra('begin_date', startdate)
-    s.add_extra('end_date', stopdate)
-    r = s.do_search
-    page_facets = r.get_facet_list("page_facet")
-    r.total
-  end
-  
   def get_data
     # ?query=japan%20publication_year:[1981]%20publication_month:[12]&fields=+&facets=org_facet
     start = 1981
-    stop  = 2009
+    stop  = 1992
     threads = []
     
     words.each do |word|
@@ -70,7 +63,7 @@ class MySketch < Processing::App
               fields  << "+"
               facets  << "org_facet"
             end
-          
+            
             results[word] << search.do_search
           end
         end
@@ -87,19 +80,58 @@ class MySketch < Processing::App
   def make_chart
     background 80
     
-    step_size = TWO_PI / results[words.first].length
+    step_size = width.to_f / results[words.first].length
+    
+    direction = true
     words.each do |word|
+      if direction
+        direction = false
+      else
+        direction = true
+      end
+
       results[word].each_with_index do |result,i|
         if result
           push_matrix
-          i += 1
-          rotation = step_size * i
-      
-          translate width/2, height/2
-          rotate rotation
+          offset = step_size * i
+          
+          translate offset, height/2
+
           fill *colors[word]
-          rect 0,0, result.total, 3
-      
+          
+          if direction
+            rect 0,result.total*-1, step_size-1.0, result.total
+            
+            result.get_facet_list('org_facet').each_with_index do |facet,i|
+              foff = 10*i
+              fill 80
+              push_matrix
+              rotate radians(-90)
+              text facet.term, 0, foff
+              pop_matrix
+            end
+          else
+            rect 0,0, step_size-1.0, result.total
+
+            facet = result.get_facet_list('org_facet').first
+            push_matrix
+            fill 0
+            translate step_size, result.total-2
+            #rotate radians(rand(180))
+            text facet.term, 0, 0
+            pop_matrix
+
+            # result.get_facet_list('org_facet').each_with_index do |facet,i|
+            #   foff = 10*i
+            #   fill 0
+            #   push_matrix
+            #   translate step_size-1.0, result.total
+            #   rotate radians(rand(180))
+            #   text facet.term, 0, 0
+            #   pop_matrix
+            # end
+          end
+          #puts result.facets.inspect
           pop_matrix
         end
       end
@@ -108,16 +140,6 @@ class MySketch < Processing::App
     # result_file.write Marshal.dump( results )
     # result_file.close_write
     # exit
-  end
-  
-  def rotate_view
-    translate(width/2, height/2);
-    directionalLight(200, 200, 200, @light_x,@light_y,@light_z)
-    @whatev||= 0
-    @whatev += 0.05
-    puts @whatev
-    rotate_y @whatev
-    @squares.each{|s| s.show}
   end
 
   def fill_brights opacity = 255
