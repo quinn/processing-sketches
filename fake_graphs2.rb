@@ -13,6 +13,8 @@ class MySketch < Processing::App
   def setup
     setup_controls
     frame_rate 1
+
+    text_font create_font("Arial", 10)
     
     smooth
     draw
@@ -30,10 +32,17 @@ class MySketch < Processing::App
     20.times do |n|
       n += 1
       fill 0
-      text_font create_font("Arial", 10)
+      stroke_weight 2
       
-      text "#{n*10}.00", 85, n*20+3
-      line 50, n*20, 80, n*20
+      #text "#{n*10}.00", 85, n*20+3
+      if n % 4 == 0
+        line 50, n*20, 60, n*20
+      elsif n % 2 == 0
+        line 50, n*20, 65, n*20
+      else
+        line 50, n*20, 55, n*20
+      end
+      line 50, n*20+10, 55, n*20+10
       ellipse 50, n*20, 2, 2
     end
     line 50, 20, 50, 400
@@ -85,4 +94,4 @@ class Array
   end
 end
 
-P = MySketch.new :title => "FakeGraphs", :width => 500, :height => 500#, :full_screen => true
+P = MySketch.new :title => "FakeGraphs2", :width => 500, :height => 500#, :full_screen => true

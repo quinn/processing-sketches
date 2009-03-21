@@ -1,5 +1,4 @@
 .DS_Store
-*.sw*
 shapes.log
 screenshots/*
 svg_files/*

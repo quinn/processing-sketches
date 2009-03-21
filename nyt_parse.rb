@@ -17,7 +17,7 @@ class MySketch < Processing::App
   load_libraries :control_panel, :json, :nyt_processing
   import "org.json"
   include Trig
-  attr_accessor :minim, :input, :sensitivity, :words, :results, :colors
+  attr_accessor :minim, :input, :sensitivity, :words, :results, :colors, :facets, :facet_pos
   
   def setup
     frame_rate 0.5
@@ -31,7 +31,10 @@ class MySketch < Processing::App
     @words = 'japan', 'china'
     @results = {}
     @colors  = {}
-
+    @facets  = []
+    @facet_pos  = {}
+    @stroke_color = fill_brights
+    
     get_data
     make_chart
     draw
@@ -55,7 +58,7 @@ class MySketch < Processing::App
         12.times do |month|
           threads << Thread.new do
             month += 1
-          
+            
             search = TimesArticleSearch.new.tap do
               queries << 'japan'
               monthstr = (month > 9) ? month.to_s : ("0#{month}")
@@ -70,7 +73,7 @@ class MySketch < Processing::App
       end
     end
     
-    threads.each{|th| th.join} 
+    threads.each{|th| th.join}
   end
   
   def draw
@@ -95,42 +98,35 @@ class MySketch < Processing::App
           push_matrix
           offset = step_size * i
           
-          translate offset, height/2
-
           fill *colors[word]
-          
+
           if direction
-            rect 0,result.total*-1, step_size-1.0, result.total
-            
-            result.get_facet_list('org_facet').each_with_index do |facet,i|
-              foff = 10*i
-              fill 80
-              push_matrix
-              rotate radians(-90)
-              text facet.term, 0, foff
-              pop_matrix
-            end
+            x = 0 + offset
+            y = result.total*-1 + height/2
+            rect x,y, step_size-1.0, result.total
           else
-            rect 0,0, step_size-1.0, result.total
-
-            facet = result.get_facet_list('org_facet').first
-            push_matrix
-            fill 0
-            translate step_size, result.total-2
-            #rotate radians(rand(180))
-            text facet.term, 0, 0
-            pop_matrix
-
-            # result.get_facet_list('org_facet').each_with_index do |facet,i|
-            #   foff = 10*i
-            #   fill 0
-            #   push_matrix
-            #   translate step_size-1.0, result.total
-            #   rotate radians(rand(180))
-            #   text facet.term, 0, 0
-            #   pop_matrix
-            # end
+            x = 0 + offset
+            y = offset + result.total
+            rect offset,height/2, step_size-1.0, result.total
           end
+          
+          #rect x,y, step_size-1.0, result.total
+          
+          stroke *@stroke_color
+          stroke_weight 0.2
+          result.get_facet_list('org_facet').each_with_index do |facet,i|
+            term = facet.term
+            
+            if facets.include? term
+              line x,y, facet_pos[term][0], facet_pos[term][1]
+            end
+            
+            facets << term
+            facet_pos.delete term
+            facet_pos[term] = [x,y]
+          end
+          no_stroke
+          
           #puts result.facets.inspect
           pop_matrix
         end
