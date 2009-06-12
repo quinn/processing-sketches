@@ -32,12 +32,12 @@ module Trig
     radian - radians(90)
   end
   
-  def connect start, finish, color = [30, 180,10], thickness = 20
+  def connect start, finish, color = [30, 180,10], thickness = 20, stroke_thickness = 3
     a = start ; z = finish
     
     push_style
     stroke *color
-    stroke_weight 3
+    stroke_weight stroke_thickness
     no_fill
     
     o1 = o
