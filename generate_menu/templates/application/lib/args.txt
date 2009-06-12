@@ -1,0 +1,2 @@
+
+org.jruby.Main lib/ruby-processing/runners/run.rb generate_menu.rb --windows-app
